@@ -49,3 +49,14 @@
 
 ---
 
+## 📸 Demo Preview
+
+`https://film-hub-peach.vercel.app/`
+
+---
+
+## 🧑‍💻 Getting Started
+
+1. Clone the repo:
+```bash
+git clone https://github.com/Aditya-2315/Film-Hub.git
