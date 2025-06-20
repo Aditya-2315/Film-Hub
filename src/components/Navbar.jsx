@@ -34,7 +34,7 @@ const Navbar = () => {
 
   return (
     <div className='bg-neutral-800 w-full md:p-5 p-3 mb-2 flex md:flex-row md:gap-0 items-center md:justify-around justify-center'>
-      <Link to='/' className='flex flex-col md:flex-row items-center'><FilmHubIcon/> <h1>FilmHub</h1></Link>
+      <Link to='/' className='flex flex-col md:flex-row items-center'><FilmHubIcon/></Link>
       <div className='flex gap-5 items-center flex-wrap md:justify-between justify-center' >
         <div className="search flex bg-neutral-900 rounded-lg border border-white items-center">
           <svg xmlns="http://www.w3.org/2000/svg" className='rounded-lg mx-1 rounded-e-none' x="0px" y="0px" width="28" height="28" fill='#ffffff' viewBox="0 0 50 50">
@@ -49,11 +49,11 @@ const Navbar = () => {
           />
         </div>
         <nav>
-          <ul className='flex gap-5'>
+          <ul className='flex gap-5 text-sm md:text-lg'>
             <NavLink to='/'>Explore</NavLink>
             <NavLink to='/movies'>Movies</NavLink>
-            <NavLink to='/shows'>TV Shows</NavLink>
-            <NavLink to='/watch-list'>Watch List</NavLink>
+            <NavLink className="whitespace-nowrap" to='/shows'>TV Shows</NavLink>
+            <NavLink className="whitespace-nowrap" to='/watch-list'>Watch List</NavLink>
           </ul>
         </nav>
       </div>

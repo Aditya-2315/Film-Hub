@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const fetchContent = async (page) => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/trending/all/week`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/trending/all/week?region=IN`, {
       params: { page },
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_API_BEARER_TOKEN}`,
@@ -17,7 +17,7 @@ export const fetchContent = async (page) => {
 };
 export const fetchMovies = async (page) => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/movie/popular`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/movie/popular?region=IN`, {
       params: { page },
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_API_BEARER_TOKEN}`,
@@ -32,7 +32,7 @@ export const fetchMovies = async (page) => {
 };
 export const fetchTV = async (page) => {
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/tv/popular`, {
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/tv/popular?region=IN`, {
       params: { page },
       headers: {
         Authorization: `Bearer ${import.meta.env.VITE_API_BEARER_TOKEN}`,

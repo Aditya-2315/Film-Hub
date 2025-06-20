@@ -3,6 +3,7 @@ import { fetchContent } from '../services/movieServices.js';
 import Card from '../components/Card';
 import { motion } from 'motion/react';
 import { SearchContext } from '../context/searchContext.jsx';
+import useWatchList from '../hooks/useWatchList';
 
 function Explore() {
   const [movies, setMovies] = useState([]);
@@ -12,6 +13,7 @@ function Explore() {
   const loader = useRef(null);
   const initialFetchDone = useRef(false);
   const { searchResults } = useContext(SearchContext);
+  const { watchList } = useWatchList();
 
   const fetchAndSetMovies = async (page) => {
     setLoading(true);
@@ -61,7 +63,10 @@ function Explore() {
     };
   }, [handleObserver]);
 
-  const displayMovies = searchResults || movies;
+  const baseContent = searchResults || movies;
+  const likedItems = watchList;
+  const unlikedItems = baseContent.filter(item => !likedItems.some(liked => liked.id === item.id && liked.media_type === item.media_type));
+  const displayMovies = [...likedItems, ...unlikedItems];
 
   return (
     <>
@@ -73,7 +78,7 @@ function Explore() {
           transition={{ duration: 0.3, ease: "easeOut" }}
           className='border-t w-full items-center px-5 py-3 grid grid-cols-2 md:grid-cols-6 gap-6'>
           {displayMovies.map((movie) => (
-            <Card key={movie.id} movie={movie} />
+            <Card key={`${movie.media_type}-${movie.id}`} movie={movie} />
           ))}
           {!searchResults && (
             <div ref={loader} className="w-full col-span-full flex justify-center py-6">

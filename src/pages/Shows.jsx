@@ -3,6 +3,7 @@ import { fetchTV } from '../services/movieServices.js';
 import Card from '../components/Card';
 import { motion } from 'motion/react';
 import { SearchContext } from '../context/searchContext.jsx';
+import useWatchList from '../hooks/useWatchList';
 
 function Shows() {
   const [shows, setShows] = useState([]);
@@ -12,6 +13,7 @@ function Shows() {
   const loader = useRef(null);
   const initialFetchDone = useRef(false);
   const { searchResults } = useContext(SearchContext);
+  const { watchList } = useWatchList();
 
   const fetchAndSetShows = async (page) => {
     setLoading(true);
@@ -61,7 +63,10 @@ function Shows() {
     };
   }, [handleObserver]);
 
-  const displayshows = searchResults || shows;
+  const baseShows = searchResults || shows;
+  const likedShows = watchList.filter(item => item.media_type === 'tv');
+  const unlikedShows = baseShows.filter(show => !likedShows.some(liked => liked.id === show.id));
+  const displayShows = [...likedShows, ...unlikedShows];
 
   return (
     <>
@@ -72,7 +77,7 @@ function Shows() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
           className='border-t w-full items-center px-5 py-3 grid grid-cols-2 md:grid-cols-6 gap-6'>
-          {displayshows.map((movie) => (
+          {displayShows.map((movie) => (
             <Card key={movie.id} movie={movie} />
           ))}
           {!searchResults && (

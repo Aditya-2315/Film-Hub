@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { fetchMovies } from '../services/movieServices.js';
 import { SearchContext } from '../context/searchContext.jsx';
 import Card from '../components/Card';
+import useWatchList from '../hooks/useWatchList';
 
 function Movies() {
     const [movies, setMovies] = useState([]);
@@ -12,7 +13,8 @@ function Movies() {
     const loader = useRef(null);
     const initialFetchDone = useRef(false);
     const { searchResults } = useContext(SearchContext);
-  
+    const { watchList } = useWatchList();
+
   const fetchAndSetMovies = async (page) => {
     setLoading(true);
     try {
@@ -61,15 +63,18 @@ function Movies() {
     };
   }, [handleObserver]);
 
-  const displayMovies = searchResults || movies;
+  const baseMovies = searchResults || movies;
+  const likedMovies = watchList.filter(item => item.media_type === 'movie');
+  const unlikedMovies = baseMovies.filter(movie => !likedMovies.some(liked => liked.id === movie.id));
+  const displayMovies = [...likedMovies, ...unlikedMovies];
 
   return (
        <div className=' flex flex-col gap-2 items-center justify-center'>
         <h1 className=' text-2xl font-extrabold self-center'>Movies are here</h1>
         <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.3,ease: "easeOut" }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.3,ease: "easeOut" }}
         className=' border-t w-full items-center px-5 py-3 grid grid-cols-2 md:grid-cols-6 gap-6'>
           {displayMovies.map((movie) => (
             <Card key={movie.id} movie={movie} />
@@ -86,7 +91,7 @@ function Movies() {
             </div>
           )}
         </motion.div>
-  </div>
+      </div>
   )
 }
 

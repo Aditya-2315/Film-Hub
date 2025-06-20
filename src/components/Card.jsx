@@ -29,22 +29,12 @@ const itemWithType = { ...movie, media_type: mediaType };
     addToWatchList(itemWithType);
   }
   }
-  
-
-  const handleLike = () => {
-    setLiked(!liked)
-    // if (liked) {
-    //   removeFromWatchList(movie.id);
-    // } else {
-    //   addToWatchList(movie);
-    // }
-  };
 
   return (
     <motion.section
       whileHover={{ scale: 1.1 }}
       style={{ transitionDuration: 10 }}
-      className='relative md:w-[15lvw] cursor-pointer flex flex-col gap-3 px-3 py-2 md:h-[50lvh] bg-neutral-800 rounded-lg'
+      className='relative md:w-[15lvw] cursor-pointer flex flex-col gap-3 px-3 py-2 md:h-[50dvh] bg-neutral-800 rounded-lg'
     >
       <motion.div
         whileTap={{ scale: 0.5 }}
