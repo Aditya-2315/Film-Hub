@@ -15,6 +15,14 @@ function Shows() {
   const { searchResults } = useContext(SearchContext);
   const { watchList } = useWatchList();
 
+  if (!navigator.onLine) {
+  return (
+    <div className="p-4 text-center text-muted">
+      You're offline. Explore and search won't work right now.
+    </div>
+  );
+}
+
   const fetchAndSetShows = async (page) => {
     setLoading(true);
     try {
