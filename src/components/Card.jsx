@@ -75,6 +75,7 @@ function Card({ movie }) {
       </motion.div>
       <div className="relative w-full h-full group rounded-lg overflow-hidden">
         <img
+        loading='lazy'
           src={movie.poster_path ? `${import.meta.env.VITE_API_IMAGE_URL}${movie.poster_path}` : placeholder}
           className={`rounded-lg w-full h-full object-cover transition-opacity duration-300 ${
             showOverview || isHovered ? "opacity-50" : "opacity-100"
