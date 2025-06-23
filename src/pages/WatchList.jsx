@@ -1,10 +1,11 @@
-import React from 'react'
 import { motion, AnimatePresence } from 'motion/react';
 import useWatchList from '../hooks/useWatchList';
 import Card from '../components/Card';
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 const WatchList = () => {
   const { watchList } = useWatchList();
+  const isOnline = useOnlineStatus();
 
   const movies = watchList.filter(item => item.media_type === 'movie');
   const tvShows = watchList.filter(item => item.media_type === 'tv');
@@ -12,6 +13,12 @@ const WatchList = () => {
   return (
     <div className=' flex flex-col gap-2 items-center justify-center'>
       <h1 className=' text-2xl font-extrabold self-center'>Your Watch List</h1>
+
+      {!isOnline && (
+        <div className="text-center p-4 text-yellow-500">
+          ⚠️ You are offline. Only your saved watchlist is available.
+        </div>
+      )}
 
       {movies.length > 0 && (
         <>

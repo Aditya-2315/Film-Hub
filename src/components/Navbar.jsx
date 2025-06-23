@@ -3,12 +3,15 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { SearchContext } from '../context/searchContext.jsx';
 import FilmHubIcon from "../assets/FilmHubIcon.jsx"
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 const Navbar = () => {
   const [query, setQuery] = useState('');
   const debounceRef = useRef(null);
   const location = useLocation();
   const { setSearchResults } = useContext(SearchContext);
+   const isOnline = useOnlineStatus();
+
 
   const getSearchType = () => {
     if (location.pathname.startsWith('/movies')) return 'movie';
@@ -50,10 +53,16 @@ const Navbar = () => {
         </div>
         <nav>
           <ul className='flex gap-5 text-sm md:text-lg'>
-            <NavLink to='/'>Explore</NavLink>
-            <NavLink to='/movies'>Movies</NavLink>
-            <NavLink className="whitespace-nowrap" to='/shows'>TV Shows</NavLink>
-            <NavLink className="whitespace-nowrap" to='/watch-list'>Watch List</NavLink>
+            {isOnline ? (
+              <>
+                <NavLink to='/'>Explore</NavLink>
+                <NavLink to='/movies'>Movies</NavLink>
+                <NavLink className="whitespace-nowrap" to='/shows'>TV Shows</NavLink>
+                <NavLink className="whitespace-nowrap" to='/watch-list'>Watch List</NavLink>
+              </>
+            ) : (
+              <NavLink className="whitespace-nowrap" to='/watch-list'>Watch List</NavLink>
+            )}
           </ul>
         </nav>
       </div>

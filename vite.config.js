@@ -8,6 +8,13 @@ export default defineConfig({
   plugins: [react(),tailwindcss(),
     VitePWA({
       registerType: 'autoUpdate',
+      includeAssets: [
+  'filmhub-favicon.ico',
+  'apple-touch-icon.png',
+],
+devOptions: {
+  enabled: true, // enables SW even in dev (not needed for production)
+},
       manifest: {
         name: 'FilmHub',
         short_name: 'FilmHub',
